@@ -1,10 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:jokes/models/email_list.dart';
+import 'package:jokes/models/joke.dart';
 import 'package:jokes/screens/screen_home.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => Joke()),
+        ChangeNotifierProvider(create: (context) => EmailList()),
+      ],
+      child: const MyApp(),
+    ),
+  );
 }
 
+/// A single page app that displays different kinds of jokes.
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
@@ -14,7 +26,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Jokes',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        scaffoldBackgroundColor: Colors.transparent,
       ),
       home: const HomeScreen(),
     );
